@@ -42,8 +42,13 @@ def main(req: func.HttpRequest) -> func.HttpResponse:
         g = re.match(f'(.*)\b({splitKeywords})\b(.*)|(.*)', text).groups()
 
         #create todoist task
-        item1 = api.items.add('%s%s' % (g[0] or '', g[3] or ''), projectId, date_string=g[2])
-        api.commit()
+        try:
+            item1 = api.items.add('%s%s' % (g[0] or '', g[3] or ''), projectId, date_string=g[2])
+            api.commit()
+        except SyncError:
+            logging.warn('Looks like an invalid date string, so just use the full text')
+            item1 = api.items.add(text, projectId)
+            api.commit()
 
         return func.HttpResponse(f"Created Todoist task {text}!")
     else:
