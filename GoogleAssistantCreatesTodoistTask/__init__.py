@@ -45,9 +45,9 @@ def main(req: func.HttpRequest) -> func.HttpResponse:
         item1 = api.items.add('%s%s' % (g[0] or '', g[3] or ''), projectId, date_string=g[2])
         api.commit()
 
-        return func.HttpResponse(f"Created task {text}!")
+        return func.HttpResponse(f"Created Todoist task {text}!")
     else:
         return func.HttpResponse(
-             "Please pass a text on the query string or in the request body",
+             "Please pass a text on the query string,
              status_code=400
         )
