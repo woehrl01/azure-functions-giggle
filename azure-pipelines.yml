@@ -3,9 +3,6 @@
 # Add steps that build, run tests, deploy, and more:
 # https://aka.ms/yaml
 
-trigger:
-- master
-
 pool:
   vmImage: 'Ubuntu 16.04'
 
@@ -13,6 +10,11 @@ steps:
 - task: NodeTool@0
   inputs:
     versionSpec: '8.x'
+
+- task: UsePythonVersion@0
+  inputs:
+    versionSpec: '3.7'
+    architecture: 'x64'
 
 - script: |
     set -e
@@ -24,9 +26,11 @@ steps:
     npm i -g azure-functions-core-tools --unsafe-perm true
     echo "installing dotnet core"
     curl -sSL https://dot.net/v1/dotnet-install.sh | bash /dev/stdin --channel 2.0
+  displayName: Install Azure CLI and DotNet Core
+
 - script: |
     set -e
-    az login --service-principal --username "$(APP_ID)" --password "$(PASSWORD)" --tenant "$(TENANT_ID)" 
     func settings add FUNCTIONS_WORKER_RUNTIME python
     func extensions install
-    func azure functionapp publish $(APP_NAME) --build-native-deps
+    func pack
+  displayName: Build package
