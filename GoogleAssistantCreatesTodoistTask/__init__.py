@@ -39,7 +39,7 @@ def main(req: func.HttpRequest) -> func.HttpResponse:
         logging.info(f'Using id {projectId}.')
 
         #split on keywords
-        g = re.match(f'(.*)({splitKeywords})(.*)|(.*)', text).groups()
+        g = re.match(f'(.*)\b({splitKeywords})\b(.*)|(.*)', text).groups()
 
         #create todoist task
         item1 = api.items.add('%s%s' % (g[0] or '', g[3] or ''), projectId, date_string=g[2])
