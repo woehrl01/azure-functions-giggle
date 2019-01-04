@@ -2,6 +2,8 @@
 
 Azure Function which can be used as Webhooks from IFTTT and Zapier for better integration
 
+Must be deployed with your own Azure subscription.
+
 Currently Python is used for the functions. Please beware that **currently Python is in preview**.
 
 Following settings must be configured via the Azure Portal:
