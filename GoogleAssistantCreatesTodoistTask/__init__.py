@@ -39,7 +39,7 @@ def main(req: func.HttpRequest) -> func.HttpResponse:
         logging.info(f'Using id {projectId}.')
 
         #split on keywords
-        g = re.match(f'(.*)\b({splitKeywords})\b(.*)|(.*)', text).groups()
+        g = re.match(f'(.+)\\s({splitKeywords})\\s(.+)|(.+)', text).groups()
 
         #create todoist task
         try:
@@ -50,7 +50,7 @@ def main(req: func.HttpRequest) -> func.HttpResponse:
             item1 = api.items.add(text, projectId)
             api.commit()
 
-        return func.HttpResponse(f"Created Todoist task {text}!")
+        return func.HttpResponse(f'Created Todoist task "{text}"!')
     else:
         return func.HttpResponse(
              "Please pass a text on the query string",
