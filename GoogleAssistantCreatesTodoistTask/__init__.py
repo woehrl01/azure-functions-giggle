@@ -53,6 +53,6 @@ def main(req: func.HttpRequest) -> func.HttpResponse:
         return func.HttpResponse(f"Created Todoist task {text}!")
     else:
         return func.HttpResponse(
-             "Please pass a text on the query string,
+             "Please pass a text on the query string",
              status_code=400
         )
