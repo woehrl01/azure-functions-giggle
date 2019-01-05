@@ -19,23 +19,10 @@ jobs:
       versionSpec: '3.7'
       architecture: 'x64'
   
-  - script: |
-      set -e
-      #echo "deb [arch=amd64] https://packages.microsoft.com/repos/azure-cli/ wheezy main" | sudo tee /etc/apt/sources.list.d/azure-cli.list
-      #curl -L https://packages.microsoft.com/keys/microsoft.asc | sudo apt-key add -
-      #sudo apt-get install -y apt-transport-https
-      #echo "install Azure CLI..."
-      #sudo apt-get update && sudo apt-get install -y azure-cli
-      npm i -g azure-functions-core-tools --unsafe-perm true
-      #echo "installing dotnet core"
-      #curl -sSL https://dot.net/v1/dotnet-install.sh | bash /dev/stdin --channel 2.0
-    displayName: Install Azure CLI and DotNet Core
-  
-  - script: |
-      set -e
-      #func settings add FUNCTIONS_WORKER_RUNTIME python
-      #func extensions install
-      func pack
+  - script: npm i -g azure-functions-core-tools --unsafe-perm true
+    displayName: Install azure-functions-core-tools
+
+  - script: func pack
     displayName: Build package
 
   - task: CopyFiles@2
